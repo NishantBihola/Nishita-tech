@@ -15,8 +15,6 @@ import {
   Phone, 
   Mail, 
   Linkedin, 
-  Facebook, 
-  Twitter,
   ArrowRight,
   Droplets,
   CheckCircle2,
@@ -41,7 +39,8 @@ const CONTACT_INFO = {
   email: "Naishadh_bihola@yahoo.ca",
   phone: "780-270-8729",
   location: "2212, 55 street SW, Edmonton, Alberta, Canada",
-  hours: "Mon-Fri: 7:00 AM - 7:00 PM"
+  hours: "Mon-Fri: 7:00 AM - 7:00 PM",
+  linkedin: "https://www.linkedin.com/in/naishadhsinh/"
 };
 
 import { Logo } from "./components/Logo";
@@ -438,11 +437,14 @@ const Contact = () => {
               <div className="mt-12 pt-12 border-t border-slate-100">
                 <p className="font-bold text-brand-primary mb-4">Follow Us</p>
                 <div className="flex gap-4">
-                  {[Facebook, Twitter, Linkedin].map((Icon, i) => (
-                    <a key={i} href="#" className="p-3 rounded-full bg-slate-100 text-slate-600 hover:bg-brand-accent hover:text-white transition-all">
-                      <Icon className="w-5 h-5" />
-                    </a>
-                  ))}
+                  <a 
+                    href={CONTACT_INFO.linkedin} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="p-3 rounded-full bg-slate-100 text-slate-600 hover:bg-brand-accent hover:text-white transition-all"
+                  >
+                    <Linkedin className="w-5 h-5" />
+                  </a>
                 </div>
               </div>
             </div>
