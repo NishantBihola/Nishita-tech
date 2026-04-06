@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { useState } from "react";
+import React, { useState } from "react";
 import { motion } from "motion/react";
 import { 
   Zap, 
@@ -19,7 +19,9 @@ import {
   Twitter,
   ArrowRight,
   Droplets,
-  CheckCircle2
+  CheckCircle2,
+  Menu,
+  X
 } from "lucide-react";
 
 const IMAGES = {
@@ -44,25 +46,72 @@ const CONTACT_INFO = {
 
 import { Logo } from "./components/Logo";
 
-const Navbar = () => (
-  <nav className="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-slate-200">
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div className="flex justify-between items-center h-20">
-        <div className="flex items-center gap-4">
-          <Logo className="h-14 w-auto" />
-          <span className="font-bold text-xl tracking-tight text-brand-primary hidden lg:block">
-            NISHITA TECHNICAL
-          </span>
-        </div>
-        <div className="hidden md:flex items-center space-x-8">
-          <a href="#about" className="text-sm font-medium text-slate-600 hover:text-brand-accent transition-colors">About</a>
-          <a href="#services" className="text-sm font-medium text-slate-600 hover:text-brand-accent transition-colors">Services</a>
-          <a href="#contact" className="text-sm font-medium text-slate-600 hover:text-brand-accent transition-colors">Contact</a>
+const Navbar = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <nav className="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-md border-b border-slate-200">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-20">
+          <div className="flex items-center gap-3">
+            <Logo className="h-10 sm:h-14 w-auto" />
+            <span className="font-bold text-lg sm:text-xl tracking-tight text-brand-primary hidden sm:block">
+              NISHITA TECHNICAL
+            </span>
+          </div>
+          
+          {/* Desktop Nav */}
+          <div className="hidden md:flex items-center space-x-8">
+            <a href="#about" className="text-sm font-medium text-slate-600 hover:text-brand-accent transition-colors">About</a>
+            <a href="#services" className="text-sm font-medium text-slate-600 hover:text-brand-accent transition-colors">Services</a>
+            <a href="#contact" className="text-sm font-medium text-slate-600 hover:text-brand-accent transition-colors">Contact</a>
+          </div>
+
+          {/* Mobile Menu Button */}
+          <div className="md:hidden">
+            <button 
+              onClick={() => setIsOpen(!isOpen)}
+              className="p-2 text-slate-600 hover:text-brand-accent transition-colors"
+            >
+              {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
+          </div>
         </div>
       </div>
-    </div>
-  </nav>
-);
+
+      {/* Mobile Nav Dropdown */}
+      {isOpen && (
+        <motion.div 
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="md:hidden bg-white border-b border-slate-200 py-4 px-4 space-y-4 shadow-xl"
+        >
+          <a 
+            href="#about" 
+            onClick={() => setIsOpen(false)}
+            className="block text-base font-medium text-slate-600 hover:text-brand-accent transition-colors"
+          >
+            About
+          </a>
+          <a 
+            href="#services" 
+            onClick={() => setIsOpen(false)}
+            className="block text-base font-medium text-slate-600 hover:text-brand-accent transition-colors"
+          >
+            Services
+          </a>
+          <a 
+            href="#contact" 
+            onClick={() => setIsOpen(false)}
+            className="block text-base font-medium text-slate-600 hover:text-brand-accent transition-colors"
+          >
+            Contact
+          </a>
+        </motion.div>
+      )}
+    </nav>
+  );
+};
 
 const Hero = () => (
   <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden bg-brand-primary text-white">
@@ -80,19 +129,19 @@ const Hero = () => (
           <ShieldCheck className="w-4 h-4" />
           <span>Safety is a lifestyle</span>
         </div>
-        <h1 className="text-5xl lg:text-8xl font-bold leading-[1.1] mb-8 tracking-tight">
+        <h1 className="text-4xl sm:text-5xl lg:text-8xl font-bold leading-[1.1] mb-6 sm:mb-8 tracking-tight">
           Precision Electrical <br />
           <span className="text-brand-accent">Solutions.</span>
         </h1>
-        <p className="text-xl text-slate-300 mb-12 max-w-2xl mx-auto leading-relaxed">
+        <p className="text-lg sm:text-xl text-slate-300 mb-8 sm:mb-12 max-w-2xl mx-auto leading-relaxed px-4">
           NISHITA TECHNICAL & TECHNOLOGY LTD. provides highly specialized electrical services to industrial applications across Alberta.
         </p>
-        <div className="flex flex-wrap justify-center gap-6">
-          <a href="#contact" className="bg-brand-accent text-white px-10 py-4 rounded-full font-bold hover:bg-orange-600 transition-all flex items-center gap-2 group shadow-2xl shadow-orange-900/40">
+        <div className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-6 px-4">
+          <a href="#contact" className="bg-brand-accent text-white px-8 sm:px-10 py-3.5 sm:py-4 rounded-full font-bold hover:bg-orange-600 transition-all flex items-center justify-center gap-2 group shadow-2xl shadow-orange-900/40">
             Work With Us
             <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
           </a>
-          <a href="#services" className="bg-white/10 backdrop-blur-sm text-white border border-white/20 px-10 py-4 rounded-full font-bold hover:bg-white/20 transition-all">
+          <a href="#services" className="bg-white/10 backdrop-blur-sm text-white border border-white/20 px-8 sm:px-10 py-3.5 sm:py-4 rounded-full font-bold hover:bg-white/20 transition-all text-center">
             Our Services
           </a>
         </div>
@@ -102,17 +151,17 @@ const Hero = () => (
 );
 
 const Stats = () => (
-  <section className="py-16 bg-white border-b border-slate-100">
+  <section className="py-12 sm:py-16 bg-white border-b border-slate-100">
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-12 text-center">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 sm:gap-12 text-center">
         {[
           { label: "Qualified Employees", value: "Expert Team", desc: "Not only is our team full of professionals - we're a fun bunch, too." },
           { label: "Projects Delivered", value: "Successfully Completed", desc: "We successfully completed individual projects across Alberta." },
           { label: "Key Industries", value: "Specialist Experience", desc: "We have specialist experience in a handful of industries." }
         ].map((stat, i) => (
-          <div key={i} className="space-y-3">
-            <p className="text-brand-accent font-bold text-lg uppercase tracking-wider">{stat.label}</p>
-            <p className="text-3xl font-bold text-brand-primary">{stat.value}</p>
+          <div key={i} className="space-y-2 sm:space-y-3">
+            <p className="text-brand-accent font-bold text-base sm:text-lg uppercase tracking-wider">{stat.label}</p>
+            <p className="text-2xl sm:text-3xl font-bold text-brand-primary">{stat.value}</p>
             <p className="text-slate-500 text-sm max-w-xs mx-auto">{stat.desc}</p>
           </div>
         ))}
@@ -122,13 +171,13 @@ const Stats = () => (
 );
 
 const Certifications = () => (
-  <section className="py-12 bg-slate-50 border-y border-slate-200">
+  <section className="py-8 sm:py-12 bg-slate-50 border-y border-slate-200 overflow-hidden">
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div className="flex flex-wrap justify-center items-center gap-8 md:gap-16 opacity-70 grayscale hover:grayscale-0 transition-all duration-500">
-        <img src={IMAGES.redSeal} alt="Red Seal" className="h-16 w-auto" referrerPolicy="no-referrer" />
-        <img src={IMAGES.core} alt="COR Certification" className="h-16 w-auto" referrerPolicy="no-referrer" />
-        <img src={IMAGES.acsa} alt="ACSA" className="h-16 w-auto" referrerPolicy="no-referrer" />
-        <img src={IMAGES.fortMcMurray} alt="Fort McMurray" className="h-12 w-auto" referrerPolicy="no-referrer" />
+      <div className="flex flex-wrap justify-center items-center gap-6 sm:gap-16 opacity-70 grayscale hover:grayscale-0 transition-all duration-500">
+        <img src={IMAGES.redSeal} alt="Red Seal" className="h-12 sm:h-16 w-auto" referrerPolicy="no-referrer" />
+        <img src={IMAGES.core} alt="COR Certification" className="h-12 sm:h-16 w-auto" referrerPolicy="no-referrer" />
+        <img src={IMAGES.acsa} alt="ACSA" className="h-12 sm:h-16 w-auto" referrerPolicy="no-referrer" />
+        <img src={IMAGES.fortMcMurray} alt="Fort McMurray" className="h-10 sm:h-12 w-auto" referrerPolicy="no-referrer" />
       </div>
     </div>
   </section>
@@ -189,19 +238,19 @@ const About = () => (
               className="rounded-3xl shadow-2xl w-full aspect-[4/3] object-cover"
               referrerPolicy="no-referrer"
             />
-            <div className="absolute -bottom-6 -right-6 bg-white p-8 rounded-2xl shadow-xl border border-slate-100 hidden sm:block">
-              <p className="text-5xl font-bold text-brand-accent mb-1">2013</p>
-              <p className="text-sm font-bold text-brand-primary uppercase tracking-widest">Since Establishment</p>
+            <div className="absolute -bottom-4 -right-4 sm:-bottom-6 sm:-right-6 bg-white p-4 sm:p-8 rounded-2xl shadow-xl border border-slate-100 hidden sm:block">
+              <p className="text-3xl sm:text-5xl font-bold text-brand-accent mb-1">2013</p>
+              <p className="text-[10px] sm:text-sm font-bold text-brand-primary uppercase tracking-widest">Since Establishment</p>
             </div>
           </div>
-          <p className="text-lg text-slate-600 leading-relaxed pt-8">
+          <p className="text-base sm:text-lg text-slate-600 leading-relaxed pt-4 sm:pt-8 px-2 sm:px-0">
             NISHITA TECHNICAL & TECHNOLOGY LTD. values integrity to enable us to work better and more efficiently. It strengthens our relationships and establishes us as the partner of choice in our industry.
           </p>
-          <div className="grid grid-cols-2 gap-4">
-            <img src={IMAGES.project2} alt="Project Site" className="rounded-2xl shadow-lg w-full h-48 object-cover hover:scale-105 transition-transform duration-300" referrerPolicy="no-referrer" />
-            <img src={IMAGES.project3} alt="Electrical Panel" className="rounded-2xl shadow-lg w-full h-48 object-cover hover:scale-105 transition-transform duration-300" referrerPolicy="no-referrer" />
-            <img src={IMAGES.project1} alt="Industrial Facility" className="rounded-2xl shadow-lg w-full h-48 object-cover hover:scale-105 transition-transform duration-300" referrerPolicy="no-referrer" />
-            <img src={IMAGES.project5} alt="Control Systems" className="rounded-2xl shadow-lg w-full h-48 object-cover hover:scale-105 transition-transform duration-300" referrerPolicy="no-referrer" />
+          <div className="grid grid-cols-2 gap-3 sm:gap-4">
+            <img src={IMAGES.project2} alt="Project Site" className="rounded-2xl shadow-lg w-full h-32 sm:h-48 object-cover hover:scale-105 transition-transform duration-300" referrerPolicy="no-referrer" />
+            <img src={IMAGES.project3} alt="Electrical Panel" className="rounded-2xl shadow-lg w-full h-32 sm:h-48 object-cover hover:scale-105 transition-transform duration-300" referrerPolicy="no-referrer" />
+            <img src={IMAGES.project1} alt="Industrial Facility" className="rounded-2xl shadow-lg w-full h-32 sm:h-48 object-cover hover:scale-105 transition-transform duration-300" referrerPolicy="no-referrer" />
+            <img src={IMAGES.project5} alt="Control Systems" className="rounded-2xl shadow-lg w-full h-32 sm:h-48 object-cover hover:scale-105 transition-transform duration-300" referrerPolicy="no-referrer" />
           </div>
         </div>
       </div>
@@ -210,22 +259,22 @@ const About = () => (
 );
 
 const Services = () => (
-  <section id="services" className="py-24 bg-slate-900 text-white overflow-hidden relative">
+  <section id="services" className="py-16 sm:py-24 bg-slate-900 text-white overflow-hidden relative">
     <div className="absolute top-0 right-0 w-1/2 h-full bg-brand-accent/5 -skew-x-12 translate-x-1/4" />
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-      <div className="mb-20 text-center">
-        <h2 className="text-4xl lg:text-5xl font-bold mb-6">Our Services</h2>
-        <p className="text-slate-400 max-w-3xl mx-auto text-lg">
+      <div className="mb-12 sm:mb-20 text-center">
+        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6">Our Services</h2>
+        <p className="text-slate-400 max-w-3xl mx-auto text-base sm:text-lg px-4">
           We're passionate about providing highly specialized services to industrial electrical applications. Our expertise allows us to efficiently service and maintain the equipment necessary to keep Alberta up and running.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12">
         {/* Panel Assembly & Experience */}
-        <div className="space-y-8">
-          <div className="p-8 rounded-3xl bg-white/5 border border-white/10">
-            <h3 className="text-2xl font-bold mb-6 text-brand-accent border-b border-white/10 pb-4">Panel Assembly & Experience</h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4">
+        <div className="space-y-6 sm:space-y-8">
+          <div className="p-6 sm:p-8 rounded-3xl bg-white/5 border border-white/10">
+            <h3 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-brand-accent border-b border-white/10 pb-4">Panel Assembly & Experience</h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-3 sm:gap-y-4">
               {[
                 "Quality workmanship As Per Built",
                 "Assembly, wiring & testing reports",
@@ -338,13 +387,13 @@ const Contact = () => {
   };
 
   return (
-    <section id="contact" className="py-24 bg-slate-50">
+    <section id="contact" className="py-16 sm:py-24 bg-slate-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="bg-white rounded-3xl shadow-xl overflow-hidden border border-slate-100">
           <div className="grid grid-cols-1 lg:grid-cols-2">
-            <div className="p-8 lg:p-16">
+            <div className="p-6 sm:p-8 lg:p-16">
               <h2 className="text-3xl font-bold text-brand-primary mb-8">Get in Touch</h2>
-              <div className="space-y-8">
+              <div className="space-y-6 sm:space-y-8">
                 <div className="flex items-start gap-4">
                   <div className="bg-slate-100 p-3 rounded-xl">
                     <MapPin className="w-6 h-6 text-brand-accent" />
@@ -397,9 +446,9 @@ const Contact = () => {
                 </div>
               </div>
             </div>
-            <div className="bg-brand-primary p-8 lg:p-16 text-white flex flex-col justify-center">
+            <div className="bg-brand-primary p-6 sm:p-8 lg:p-16 text-white flex flex-col justify-center">
               <h3 className="text-2xl font-bold mb-6">Request a Consultation</h3>
-              <form className="space-y-4" onSubmit={handleSubmit}>
+              <form className="space-y-4 sm:space-y-6" onSubmit={handleSubmit}>
                 <div>
                   <label className="block text-sm font-medium text-slate-400 mb-1">Name</label>
                   <input 
@@ -446,20 +495,20 @@ const Contact = () => {
 };
 
 const Footer = () => (
-  <footer className="bg-white py-12 border-t border-slate-100">
+  <footer className="bg-white py-8 sm:py-12 border-t border-slate-100">
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div className="flex flex-col md:flex-row justify-between items-center gap-8 text-center md:text-left">
+      <div className="flex flex-col md:flex-row justify-between items-center gap-6 sm:gap-8 text-center md:text-left">
         <div className="flex items-center gap-2">
-          <Logo className="h-10 w-auto" />
-          <span className="font-bold text-lg text-brand-primary">NISHITA TECHNICAL</span>
+          <Logo className="h-8 sm:h-10 w-auto" />
+          <span className="font-bold text-base sm:text-lg text-brand-primary">NISHITA TECHNICAL</span>
         </div>
-        <div className="text-slate-500 text-sm space-y-1">
+        <div className="text-slate-500 text-xs sm:text-sm space-y-1">
           <p>©2019 by NISHITA TECHNICAL & TECHNOLOGY LTD.</p>
-          <p>{CONTACT_INFO.phone} | {CONTACT_INFO.email}</p>
+          <p className="break-all sm:break-normal">{CONTACT_INFO.phone} | {CONTACT_INFO.email}</p>
         </div>
-        <div className="flex gap-6">
-          <a href="#" className="text-sm text-slate-500 hover:text-brand-accent">Privacy Policy</a>
-          <a href="#" className="text-sm text-slate-500 hover:text-brand-accent">Terms of Service</a>
+        <div className="flex gap-4 sm:gap-6">
+          <a href="#" className="text-xs sm:text-sm text-slate-500 hover:text-brand-accent transition-colors">Privacy Policy</a>
+          <a href="#" className="text-xs sm:text-sm text-slate-500 hover:text-brand-accent transition-colors">Terms of Service</a>
         </div>
       </div>
     </div>
