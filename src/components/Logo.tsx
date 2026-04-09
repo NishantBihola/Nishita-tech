@@ -13,15 +13,15 @@ export const Logo: React.FC<{ className?: string }> = ({ className }) => {
       xmlns="http://www.w3.org/2000/svg" 
       className={className}
     >
-      {/* Stylized Arrow Shape */}
+      {/* Stylized Lightning Bolt */}
       <path 
-        d="M0 30L50 75L0 120V30Z" 
+        d="M50 10 L25 80 H50 L30 140 L75 65 H50 L75 10 Z" 
         fill="#00AEEF" 
+        fillOpacity="0.4"
       />
       <path 
-        d="M20 10L80 75L20 140V10Z" 
+        d="M35 20 L10 90 H35 L15 150 L60 75 H35 L60 20 Z" 
         fill="#00AEEF" 
-        fillOpacity="0.6"
       />
 
       {/* Main Text - Nishita Technic */}
